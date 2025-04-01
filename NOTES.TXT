@@ -1,0 +1,28 @@
+uptill video 7 :-
+->Set up the database
+
+video 8 :-
+SetUp express in app.js
+catch and error for connect db in index.js
+created asyncHandler, apiError and apiResponse in utilites folder
+
+video 9:-
+created models for video and users
+installed bcryptjs and jwt for our project, we installed bcrypt first but it has been depreciated so i used bcryptjs
+we encrypt the pasword in model USER during saving the password
+we set up jwt tokens id and expiry in the env file
+
+video 10 :- 
+we set up cloudinary and multer
+we set up cloudinary in utils (reusable code for further projects as well)
+create middlewware using multer and cofigured it
+
+video 11 :-
+HTTP headers
+HTTP headers are {key, value} metadata
+
+
+video 12 :-
+Created a register function in controller folder
+we create user routes in routes folder, import the route in app.js
+created userRoute in app.js and further added more routes in UserRoute under this prefix
