@@ -3,7 +3,7 @@ import { ApiError } from "../utils/apiError.js";
 import { User } from "../models/user.model.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { createReadStream } from "fs";
-import { ApiRespose } from "../utils/apiResponse.js";
+import { ApiResponse } from "../utils/apiResponse.js";
 
 const registerUser = asyncHandler(async (req, res) => {
     //get user details from frontend
@@ -18,7 +18,7 @@ const registerUser = asyncHandler(async (req, res) => {
     //return response
 
     const { fullName, email, username, password } = req.body
-    console.log("email : ", email);
+
 
     if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
         throw new ApiError(400, "All fields are compulsary")
@@ -33,20 +33,25 @@ const registerUser = asyncHandler(async (req, res) => {
     }
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    // const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
-    if (!avatarLocalPath) {
-        throw new ApiError(400, "Avatar file is required")
-    }
+    let coverImageLocalPath;
+    if (req.files && Array.isArray(req.files.coverImage) &&
+        req.files.coverImageLocalPath == req.files.coverImage[0]?.path)
+
+
+        if (!avatarLocalPath) {
+            throw new ApiError(400, "Avatar file is required")
+        }
 
     const avatar = await uploadOnCloudinary(avatarLocalPath)
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath)
+    const coverimage = await uploadOnCloudinary(coverImageLocalPath)
 
     const user = await User.create({
         fullName,
         avatar: avatar.url,
-        coverimage : coverImage?.url || "",
-        email,
+        coverimage: coverimage?.url || "",
+        email: email.toLowerCase(),
         password,
         username: username.toLowerCase()
     })
@@ -55,13 +60,13 @@ const registerUser = asyncHandler(async (req, res) => {
         "-password -refreshToken"
     )
 
-    if(!createdUser){
+    if (!createdUser) {
         throw new ApiError(500, "Something went wrong")
     }
 
-return res.status(201).json(
-    new ApiRespose(200, createdUser, "User registered successfully")
-)
+    return res.status(201).json(
+        new ApiResponse(200, createdUser, "User registered successfully")
+    )
 
 
 })

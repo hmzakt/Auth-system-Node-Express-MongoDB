@@ -13,11 +13,6 @@ app.use(cors({
 }))
 
 
-app.use((req, res, next) => {
-    console.log("🔍 Incoming Request:", req.method, req.url);
-    next();
-});
-
 
 
 app.use(express.json({
@@ -28,13 +23,11 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 //routes import
-
 import userRouter from './routes/user.routes.js'
 
 //routes declaration
 app.use("/api/v1/users", (req, res, next) => {
     try {
-        console.log("Request received at /api/v1/users");
         next(); // Pass to the actual router
     } catch (error) {
         console.error("Error in route middleware:", error);
@@ -42,5 +35,4 @@ app.use("/api/v1/users", (req, res, next) => {
     }
 }, userRouter);
  // /users is used as a prefix and further we can add more routes under userRoute 
-
 export {app};
