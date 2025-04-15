@@ -26,3 +26,8 @@ video 12 :-
 Created a register function in controller folder
 we create user routes in routes folder, import the route in app.js
 created userRoute in app.js and further added more routes in UserRoute under this prefix
+
+in between we created login, logout, register routes and functions to achieve these
+
+Video 16 :-
+Debugging
